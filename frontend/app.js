@@ -2,6 +2,7 @@ const map = L.map('map').setView([45.815, 15.981], 7);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data © OpenStreetMap contributors'
 }).addTo(map);
+//wow
 document.getElementById('showRoute')?.addEventListener('click', async () => {
     const type = document.getElementById('type').value;
     const maxDistance = Number(document.getElementById('distance').value);
