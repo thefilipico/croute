@@ -25,7 +25,12 @@ export function haversineDistance(a: POI, b: POI): number {
     return R * c;
 }
 
-export function greedyRoute(start: POI, pois: POI[], maxDistance: number): POI[] {
+export function greedyRoute(
+    start: POI,
+    pois: POI[],
+    maxDistance: number,
+    maxPois: number
+): POI[] {
     const route: POI[] = [start];
     const visited = new Set<string>();
     visited.add(start.name);
@@ -33,12 +38,13 @@ export function greedyRoute(start: POI, pois: POI[], maxDistance: number): POI[]
     let current = start;
     let totalDistance = 0;
 
-    while (true) {
+    while (route.length < maxPois) {
         let nearest: POI | null = null;
         let nearestDist = Infinity;
 
         for (const poi of pois) {
             if (visited.has(poi.name)) continue;
+
             const dist = haversineDistance(current, poi);
             if (dist < nearestDist) {
                 nearest = poi;
@@ -46,7 +52,8 @@ export function greedyRoute(start: POI, pois: POI[], maxDistance: number): POI[]
             }
         }
 
-        if (!nearest || totalDistance + nearestDist > maxDistance) break;
+        if (!nearest) break;
+        if (totalDistance + nearestDist > maxDistance) break;
 
         route.push(nearest);
         visited.add(nearest.name);
@@ -56,3 +63,4 @@ export function greedyRoute(start: POI, pois: POI[], maxDistance: number): POI[]
 
     return route;
 }
+
