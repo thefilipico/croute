@@ -10,12 +10,12 @@ body, html {
     height: 90%;
 }
 
-#controls {
-    height: 10%;
+#nav {
+    height: 61px;
     padding: 5px 10px;
     display: flex;
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: #000000;
     border-bottom: 1px solid #ccc;
     gap: 10px;
 }
