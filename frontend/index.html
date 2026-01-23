@@ -5,6 +5,9 @@
     <title>CROute</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css" />
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="/app.js" defer></script>
 </head>
 <body>
     <nav id="nav">
@@ -27,28 +30,5 @@
 
         <button id="showRoute">Show Route</button>
     </nav>
-
-    <div id="map"></div>
-
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="/app.js"></script>
-    <script>
-        const langSelect = document.getElementById('lang');
-        const typeSelect = document.getElementById('type');
-        const typeLabel = document.getElementById('type-label');
-        const distanceLabel = document.getElementById('distance-label');
-        const showRouteBtn = document.getElementById('showRoute');
-
-        langSelect.addEventListener('change', () => {
-            const lang = langSelect.value;
-            typeLabel.textContent = lang === 'en' ? 'Type:' : 'Tip:';
-            distanceLabel.textContent = lang === 'en' ? 'Max km:' : 'Maks km:';
-            showRouteBtn.textContent = lang === 'en' ? 'Show Route' : 'Prikaži Rutu';
-
-            for (const option of typeSelect.options) {
-                option.textContent = option.dataset[lang];
-            }
-        });
-    </script>
 </body>
 </html>

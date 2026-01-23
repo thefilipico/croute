@@ -19,3 +19,23 @@ document.getElementById('showRoute')?.addEventListener('click', async () => {
         L.marker([poi.lat, poi.lon]).addTo(map).bindPopup(poi.name);
     });
 });
+
+
+
+/*ph*/
+const langSelect = document.getElementById('lang');
+    const typeSelect = document.getElementById('type');
+    const typeLabel = document.getElementById('type-label');
+    const distanceLabel = document.getElementById('distance-label');
+    const showRouteBtn = document.getElementById('showRoute');
+
+    langSelect.addEventListener('change', () => {
+        const lang = langSelect.value;
+        typeLabel.textContent = lang === 'en' ? 'Type:' : 'Tip:';
+        distanceLabel.textContent = lang === 'en' ? 'Max km:' : 'Maks km:';
+        showRouteBtn.textContent = lang === 'en' ? 'Show Route' : 'Prikaži Rutu';
+
+        for (const option of typeSelect.options) {
+            option.textContent = option.dataset[lang];
+        }
+    });
