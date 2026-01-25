@@ -3,6 +3,7 @@ body, html {
     padding: 0;
     height: 100%;
     font-family: Arial, sans-serif;
+    color: white;
 }
 
 #map {
@@ -10,12 +11,12 @@ body, html {
     height: 90%;
 }
 
-#controls {
-    height: 10%;
+#nav {
+    height: 61px;
     padding: 5px 10px;
     display: flex;
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: #000000;
     border-bottom: 1px solid #ccc;
     gap: 10px;
 }
@@ -35,7 +36,7 @@ button {
     font-size: 14px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background-color 0.2s;
 }
 
 button:hover {
