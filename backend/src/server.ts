@@ -45,5 +45,5 @@ app.get("/route", (req, res) => {
 
 const PORT = 3000;
 app.listen(PORT, () =>
-  console.log(`Server running at http://localhost:${PORT}`)
+  console.log(`Server pokrenut na http://localhost:${PORT}`)
 );
