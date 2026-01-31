@@ -11,20 +11,10 @@ document.getElementById('showRoute')?.addEventListener('click', async () => {
     const url = new URL("http://localhost:3000/route");
     url.searchParams.set("type", type);
     url.searchParams.set("maxDistance", maxDistance.toString());
-    if (startLat && startLon) {
-        url.searchParams.set("startLat", startLat.toString)
-        url.searchParams.set("startLon", startLon.toString)
-    }
+
     const res = await fetch(url.toString());
     const route: POI[] = await res.json();
-
-    let startLon : number | undefined;
-    let startLat : number | undefined;
-
-    const loc = getUserLocation();
-    if (loc) {
-        [startLat, startLon] = loc;
-    }
+    
     map.eachLayer((layer) => { if ((layer as any)._path || (layer as any)._latlng) map.removeLayer(layer); });
 
     const latlngs: [number, number][] = route.map(poi => [poi.lat, poi.lon]);
