@@ -34,14 +34,3 @@ document.getElementById('showRoute')?.addEventListener('click', async () => {
         L.marker([poi.lat, poi.lon]).addTo(map).bindPopup(poi.name);
     });
 });
-
-async function getUserLocation(): Promise<[number, number] | null> {
-    return new Promise((resolve) => {
-        if (!navigator.geolocation) return resolve(null);
-
-        navigator.geolocation.getCurrentPosition(
-            (pos) => resolve([pos.coords.latitude, pos.coords.longitude]),
-            () => resolve(null)
-        );
-    });
-}
