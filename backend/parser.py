@@ -1,5 +1,6 @@
 import osmium
 import json
+import sys
 
 TYPE_TAGS = {
     "church": {"building": "church", "amenity": "place_of_worship"},
@@ -44,7 +45,7 @@ class BuildingsHandler(osmium.SimpleHandler):
                     return t
         return None
 
-pbf_path = r"C:\Users\borna\croute-1\backend\raw\croatia-260124.osm.pbf"
+pbf_path = sys.argv[1]
 
 handler = BuildingsHandler()
 handler.apply_file(pbf_path, locations=True)
