@@ -7,14 +7,15 @@ document.getElementById('showRoute')?.addEventListener('click', async () => {
     const type = document.getElementById('type').value;
     const maxDistance = Number(document.getElementById('distance').value);
     const center = map.getCenter();
-    const url = new URL("/route");
-    url.searchParams.set("type", type);
-    url.searchParams.set("maxDistance", maxDistance.toString());
-    url.searchParams.set("startLat", center.lat.toString());
-    url.searchParams.set("startLon", center.lng.toString());
+
+    const params = new URLSearchParams();
+    params.set("type", type);
+    params.set("maxDistance", maxDistance.toString());
+    params.set("startLat", center.lat.toString());
+    params.set("startLon", center.lng.toString());
 
     try {
-        const res = await fetch(url.toString());
+        const res = await fetch(`/route?${params.toString()}`);
         const data = await res.json();
         if (!res.ok) { alert(data.error || 'Server error'); return; }
         const route = data;
