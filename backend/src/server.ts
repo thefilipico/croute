@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import fs from "fs";
 import path from "path";
-import { POI, greedyRoute } from "./utils";
+import { POI, findRoute } from "./utils";
 
 const app = express();
 app.use(cors());
@@ -28,7 +28,7 @@ app.get("/route", (req, res) => {
     return res.status(404).json({ error: "No POIs of that type found" });
 
   const start: POI = { lat: startLat, lon: startLon, name: "Start", type: type, city: "" };
-  const route = greedyRoute(start, filtered, maxDistance);
+  const route = findRoute(start, filtered, maxDistance);
   res.json(route);
 });
 
