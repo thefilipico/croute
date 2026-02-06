@@ -1,23 +1,41 @@
 const map = L.map('map').setView([45.815, 15.981], 7);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data © OpenStreetMap contributors'
 }).addTo(map);
 //wow
 document.getElementById('showRoute')?.addEventListener('click', async () => {
     const type = document.getElementById('type').value;
     const maxDistance = Number(document.getElementById('distance').value);
+    const center = map.getCenter();
     const url = new URL("http://localhost:3000/route");
     url.searchParams.set("type", type);
     url.searchParams.set("maxDistance", maxDistance.toString());
-    const res = await fetch(url.toString());
-    const route = await res.json();
-    map.eachLayer((layer) => { if (layer._path || layer._latlng)
-        map.removeLayer(layer); });
-    const latlngs = route.map(poi => [poi.lat, poi.lon]);
-    L.polyline(latlngs, { color: 'blue' }).addTo(map);
-    route.forEach(poi => {
-        L.marker([poi.lat, poi.lon]).addTo(map).bindPopup(poi.name);
-    });
+    url.searchParams.set("startLat", center.lat.toString());
+    url.searchParams.set("startLon", center.lng.toString());
+
+    try {
+        const res = await fetch(url.toString());
+        const data = await res.json();
+        if (!res.ok) { alert(data.error || 'Server error'); return; }
+        const route = data;
+
+        map.eachLayer((layer) => {
+            if (layer instanceof L.TileLayer) return;
+            map.removeLayer(layer);
+        });
+
+        if (!route || !route.length) { alert('No route found'); return; }
+
+        const latlngs = route.map(poi => [poi.lat, poi.lon]);
+        const poly = L.polyline(latlngs, { color: 'blue' }).addTo(map);
+        route.forEach(poi => {
+            L.marker([poi.lat, poi.lon]).addTo(map).bindPopup(poi.name);
+        });
+        map.fitBounds(poly.getBounds(), { padding: [20, 20] });
+    } catch (err) {
+        console.error(err);
+        alert('Failed to fetch route');
+    }
 });
 
 
