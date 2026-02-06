@@ -7,7 +7,7 @@ document.getElementById('showRoute')?.addEventListener('click', async () => {
     const type = document.getElementById('type').value;
     const maxDistance = Number(document.getElementById('distance').value);
     const center = map.getCenter();
-    const url = new URL("http://localhost:3000/route");
+    const url = new URL("/route");
     url.searchParams.set("type", type);
     url.searchParams.set("maxDistance", maxDistance.toString());
     url.searchParams.set("startLat", center.lat.toString());
