@@ -7,14 +7,15 @@ document.getElementById('showRoute')?.addEventListener('click', async () => {
     const type = document.getElementById('type').value;
     const maxDistance = Number(document.getElementById('distance').value);
     const center = map.getCenter();
-    const url = new URL("/route");
-    url.searchParams.set("type", type);
-    url.searchParams.set("maxDistance", maxDistance.toString());
-    url.searchParams.set("startLat", center.lat.toString());
-    url.searchParams.set("startLon", center.lng.toString());
+
+    const params = new URLSearchParams();
+    params.set("type", type);
+    params.set("maxDistance", maxDistance.toString());
+    params.set("startLat", center.lat.toString());
+    params.set("startLon", center.lng.toString());
 
     try {
-        const res = await fetch(url.toString());
+        const res = await fetch(`/route?${params.toString()}`);
         const data = await res.json();
         if (!res.ok) { alert(data.error || 'Server error'); return; }
         const route = data;
@@ -42,18 +43,18 @@ document.getElementById('showRoute')?.addEventListener('click', async () => {
 
 /*ph*/
 const langSelect = document.getElementById('lang');
-    const typeSelect = document.getElementById('type');
-    const typeLabel = document.getElementById('type-label');
-    const distanceLabel = document.getElementById('distance-label');
-    const showRouteBtn = document.getElementById('showRoute');
+const typeSelect = document.getElementById('type');
+const typeLabel = document.getElementById('type-label');
+const distanceLabel = document.getElementById('distance-label');
+const showRouteBtn = document.getElementById('showRoute');
 
-    langSelect.addEventListener('change', () => {
-        const lang = langSelect.value;
-        typeLabel.textContent = lang === 'en' ? 'Type:' : 'Tip:';
-        distanceLabel.textContent = lang === 'en' ? 'Max km:' : 'Maks km:';
-        showRouteBtn.textContent = lang === 'en' ? 'Show Route' : 'Prikaži Rutu';
+langSelect.addEventListener('change', () => {
+    const lang = langSelect.value;
+    typeLabel.textContent = lang === 'en' ? 'Type:' : 'Tip:';
+    distanceLabel.textContent = lang === 'en' ? 'Max km:' : 'Maks km:';
+    showRouteBtn.textContent = lang === 'en' ? 'Show Route' : 'Prikaži Rutu';
 
-        for (const option of typeSelect.options) {
-            option.textContent = option.dataset[lang];
-        }
-    });
+    for (const option of typeSelect.options) {
+        option.textContent = option.dataset[lang];
+    }
+});

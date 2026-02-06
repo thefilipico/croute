@@ -6,7 +6,7 @@ export interface POI {
     city: string;
 }
 
-export function haversineDistance(a: POI, b: POI): number {
+export function calculateDistance(a: POI, b: POI): number {
     const toRad = (x: number) => (x * Math.PI) / 180;
 
     const R = 6371;
@@ -25,7 +25,7 @@ export function haversineDistance(a: POI, b: POI): number {
     return R * c;
 }
 
-export function greedyRoute(start: POI, pois: POI[], maxDistance: number): POI[] {
+export function findRoute(start: POI, pois: POI[], maxDistance: number): POI[] {
     const route: POI[] = [start];
     const visited = new Set<string>();
     visited.add(start.name);
@@ -39,7 +39,7 @@ export function greedyRoute(start: POI, pois: POI[], maxDistance: number): POI[]
 
         for (const poi of pois) {
             if (visited.has(poi.name)) continue;
-            const dist = haversineDistance(current, poi);
+            const dist = calculateDistance(current, poi);
             if (dist < nearestDist) {
                 nearest = poi;
                 nearestDist = dist;
