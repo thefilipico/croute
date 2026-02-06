@@ -20,25 +20,14 @@ app.get("/route", (req, res) => {
   const startLon = Number(req.query.startLon);
 
   if (!type) return res.status(400).json({ error: "Missing type parameter" });
+  if (isNaN(startLat) || isNaN(startLon)) return res.status(400).json({ error: "Missing or invalid start coordinates" });
 
   const filtered = pois.filter((p) => p.type === type);
 
   if (filtered.length === 0)
     return res.status(404).json({ error: "No POIs of that type found" });
 
-  let start = filtered[0];
-  if (!isNaN(startLat) && !isNaN(startLon)) {
-    start = filtered.reduce((nearest, poi) => {
-      const dist = Math.sqrt(
-        (poi.lat - startLat) ** 2 + (poi.lon - startLon) ** 2
-      );
-      const nearestDist = Math.sqrt(
-        (nearest.lat - startLat) ** 2 + (nearest.lon - startLon) ** 2
-      );
-      return dist < nearestDist ? poi : nearest;
-    }, start);
-  }
-
+  const start: POI = { lat: startLat, lon: startLon, name: "Start", type: type, city: "" };
   const route = greedyRoute(start, filtered, maxDistance);
   res.json(route);
 });
