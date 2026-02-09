@@ -1,5 +1,5 @@
 # najbolje: CROute
-prihvatljivo: croute CROUTE
+prihvatljivo: croute CROUTE;
 donekle prihvatljivo: c route, c ROUTE, C route, CRO ute
 
 ## Upute za pokretanje
